@@ -49,7 +49,7 @@ for msg in st.session_state.messages:
     with st.chat_message(role):
         st.write(msg["content"])
 
-# ✅ FIXED: Stream the audio file content as bytes
+
 if "last_audio" in st.session_state:
     try:
         with open(st.session_state.last_audio, "rb") as audio_file:
@@ -57,3 +57,4 @@ if "last_audio" in st.session_state:
             st.audio(audio_bytes, format="audio/mp3", autoplay=True)
     except Exception as e:
         st.warning(f"Unable to play audio: {e}")
+
