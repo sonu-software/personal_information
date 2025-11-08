@@ -89,7 +89,7 @@ def build_vectorstore(uploaded_pdf):
     return get_faiss_index(tmp_path, index_path, embedding_model)
 
 
-
+'''
 def speak_text(text):
     """Convert AI response to voice and play it (Windows-safe)."""
     try:
@@ -102,6 +102,28 @@ def speak_text(text):
         os.remove(temp_path)
     except Exception as e:
         print(f" Voice playback failed: {e}")
+
+''' 
+
+
+def speak_text(text):
+    """Convert AI response to voice and play it in Streamlit."""
+    try:
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as fp:
+            temp_path = fp.name
+        tts = gTTS(text=text, lang='en', slow=False)
+        tts.save(temp_path)
+
+        # Read the mp3 file and play it in Streamlit
+        with open(temp_path, "rb") as audio_file:
+            audio_bytes = audio_file.read()
+            st.audio(audio_bytes, format="audio/mp3", start_time=0)
+
+        os.remove(temp_path)
+    except Exception as e:
+        st.error(f"Voice playback failed: {e}")
+
+
 
 
 
@@ -174,4 +196,5 @@ def get_gemini_answer(query, vectorstore):
     chat = model.start_chat(history=[])
     response = chat.send_message(prompt)
     return response.text.strip()
+
 
