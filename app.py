@@ -4,7 +4,9 @@ import streamlit as st
 from PyPDF2 import PdfReader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from sentence_transformers import SentenceTransformer
-from langchain.embeddings.base import Embeddings
+#from langchain.embeddings.base import Embeddings
+from langchain_core.embeddings import Embeddings
+
 from langchain_community.vectorstores import FAISS
 import google.generativeai as genai
 from gtts import gTTS
@@ -172,3 +174,4 @@ def get_gemini_answer(query, vectorstore):
     chat = model.start_chat(history=[])
     response = chat.send_message(prompt)
     return response.text.strip()
+
